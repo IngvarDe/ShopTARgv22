@@ -127,6 +127,14 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    Id = y.Id
+                }).ToArrayAsync();
+
             var vm = new SpaceshipCreateUpdateViewModel();
 
             vm.Id = spaceship.Id;
@@ -139,6 +147,7 @@ namespace Shop.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
+            vm.FileToApiViewModels.AddRange(images);
 
             return View("CreateUpdate", vm);
         }
@@ -180,6 +189,14 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    Id = y.Id
+                }).ToArrayAsync();
+
             var vm = new SpaceshipDeleteViewModel();
 
             vm.Id = spaceship.Id;
@@ -192,6 +209,7 @@ namespace Shop.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
+            vm.FileToApiViewModels.AddRange(images);
 
             return View(vm);
         }

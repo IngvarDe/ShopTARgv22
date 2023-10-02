@@ -56,6 +56,12 @@
             @Html.DisplayFor(model => Model.ModifiedAt)
         </div>
     </dl>
+
+    @foreach (var images in Model.FileToApiViewModels)
+    {
+        <partial name="_Images" model="images" />
+    }
+
     <hr />
     <form asp-action="DeleteConfirmation">
         <input type="hidden" asp-for="Id" />
