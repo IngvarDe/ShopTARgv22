@@ -1,0 +1,188 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
+using Shop.Data;
+using Shop.Models.Realestate;
+
+namespace Shop.Controllers
+{
+    public class RealEstatesController : Controller
+    {
+        private readonly ShopContext _context;
+        private readonly IRealEstatesServices _realEstatesServices;
+
+        public RealEstatesController
+            (
+                ShopContext context,
+                IRealEstatesServices realEstatesServices
+            )
+        {
+            _context = context;
+            _realEstatesServices = realEstatesServices;
+        }
+
+
+        public IActionResult Index()
+        {
+            var result = _context.RealEstates
+                .Select(x => new RealEstateIndexViewModel
+                {
+                    Id = x.Id,
+                    Address = x.Address,
+                    SizeSqrM = x.SizeSqrM,
+                    RoomCount = x.RoomCount,
+                });
+
+            return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            RealestateCreateUpdateViewModel realEstate = new RealestateCreateUpdateViewModel();
+
+            return View("CreateUpdate", realEstate);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RealestateCreateUpdateViewModel vm)
+        {
+            var dto = new RealEstateDto()
+            {
+                Id = vm.Id,
+                Address = vm.Address,
+                SizeSqrM = vm.SizeSqrM,
+                RoomCount = vm.RoomCount,
+                Floor = vm.Floor,
+                BuildingType = vm.BuildingType,
+                BuiltInYear = vm.BuiltInYear,
+                CreatedAt = vm.CreatedAt,
+                UpdatedAt = vm.UpdatedAt,
+            };
+
+            var result = await _realEstatesServices.Create(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var realEstate = await _realEstatesServices.GetAsync(id);
+
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+
+            var vm = new RealEstateDetailsViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Address = realEstate.Address;
+            vm.SizeSqrM = realEstate.SizeSqrM;
+            vm.RoomCount = realEstate.RoomCount;
+            vm.Floor = realEstate.Floor;
+            vm.BuildingType = realEstate.BuildingType;
+            vm.BuiltInYear = realEstate.BuiltInYear;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.UpdatedAt = realEstate.UpdatedAt;
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var realEstate = await _realEstatesServices.GetAsync(id);
+
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealestateCreateUpdateViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Address = realEstate.Address;
+            vm.SizeSqrM = realEstate.SizeSqrM;
+            vm.RoomCount = realEstate.RoomCount;
+            vm.Floor = realEstate.Floor;
+            vm.BuildingType = realEstate.BuildingType;
+            vm.BuiltInYear = realEstate.BuiltInYear;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.UpdatedAt = realEstate.UpdatedAt;
+
+            return View("CreateUpdate", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(RealestateCreateUpdateViewModel vm)
+        {
+            var dto = new RealEstateDto()
+            {
+                Id = vm.Id,
+                Address = vm.Address,
+                SizeSqrM = vm.SizeSqrM,
+                RoomCount = vm.RoomCount,
+                Floor = vm.Floor,
+                BuildingType = vm.BuildingType,
+                BuiltInYear = vm.BuiltInYear,
+                CreatedAt = vm.CreatedAt,
+                UpdatedAt = vm.UpdatedAt,
+            };
+
+            var result = await _realEstatesServices.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var realEstate = await _realEstatesServices.GetAsync(id);
+
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstateDeleteViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Address = realEstate.Address;
+            vm.SizeSqrM = realEstate.SizeSqrM;
+            vm.RoomCount = realEstate.RoomCount;
+            vm.Floor = realEstate.Floor;
+            vm.BuildingType = realEstate.BuildingType;
+            vm.BuiltInYear = realEstate.BuiltInYear;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.UpdatedAt = realEstate.UpdatedAt;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var realEstateId = await _realEstatesServices.Delete(id);
+
+            if (realEstateId == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}
