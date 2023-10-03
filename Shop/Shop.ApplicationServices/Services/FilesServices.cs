@@ -96,7 +96,7 @@ namespace Shop.ApplicationServices.Services
             return null;
         }
 
-        public void UploadFilesToDatabase(SpaceshipDto dto, Spaceship domain)
+        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
@@ -104,7 +104,17 @@ namespace Shop.ApplicationServices.Services
                 {
                     using (var target = new MemoryStream())
                     {
+                        FileToDatabase files = new FileToDatabase()
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageTitle = file.FileName,
+                            RealEstateId = domain.Id,
+                        };
 
+                        file.CopyTo(target);
+                        files.ImageData = target.ToArray();
+
+                        _context.FileToDatabases.Add(files);
                     }
                 }
             }

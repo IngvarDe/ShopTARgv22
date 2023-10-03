@@ -1,6 +1,6 @@
-﻿namespace Shop.Core.Domain
+﻿namespace Shop.Core.Dto
 {
-    public class FilesToDatabase
+    public class FileToDatabaseDto
     {
         public Guid Id { get; set; }
         public string ImageTitle { get; set; }

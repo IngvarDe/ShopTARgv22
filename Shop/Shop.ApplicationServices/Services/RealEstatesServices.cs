@@ -10,13 +10,16 @@ namespace Shop.ApplicationServices.Services
     public class RealEstatesServices : IRealEstatesServices
     {
         private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
 
         public RealEstatesServices
             (
-                ShopContext context
+                ShopContext context,
+                IFileServices fileServices
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
         public async Task<RealEstate> Create(RealEstateDto dto)
@@ -34,6 +37,10 @@ namespace Shop.ApplicationServices.Services
             realEstate.CreatedAt = DateTime.Now;
             realEstate.UpdatedAt = DateTime.Now;
 
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realEstate);
+            }
 
             await _context.RealEstates.AddAsync(realEstate);
             await _context.SaveChangesAsync();
