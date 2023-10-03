@@ -58,6 +58,21 @@ else
             </div>
         </div>
 
+        <div class="form-group row">
+            <label asp-for="Files" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-5">
+                <div class="custom-file">
+                    <input class="form-control custom-file-label" asp-for="Files" multiple type="file" />
+                    <label class="custom-file-label">Choose File...</label>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var images in Model.Image)
+        {
+            <partial name="_Images" model="images" />
+        }
+
         <hr />
 
         @if (Model.Id.HasValue)
@@ -74,7 +89,7 @@ else
     </form>
 </div>
 
-@* @section Scripts
+@section Scripts
     {
     <script>
         $(document).ready(function () {
@@ -90,4 +105,4 @@ else
             });
         });
     </script>
-} *@
+}
