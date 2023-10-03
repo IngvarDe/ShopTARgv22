@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
@@ -88,6 +89,17 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
+            var photos = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new ImageToDatabaseViewModel
+                {
+                    RealEstateId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
 
             var vm = new RealEstateDetailsViewModel();
 
@@ -100,6 +112,7 @@ namespace Shop.Controllers
             vm.BuiltInYear = realEstate.BuiltInYear;
             vm.CreatedAt = realEstate.CreatedAt;
             vm.UpdatedAt = realEstate.UpdatedAt;
+            vm.Image.AddRange(photos);
 
             return View(vm);
         }
