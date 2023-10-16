@@ -5,6 +5,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 
+
 namespace Shop.ApplicationServices.Services
 {
     public class FilesServices : IFileServices
@@ -118,6 +119,18 @@ namespace Shop.ApplicationServices.Services
                     }
                 }
             }
+        }
+
+        public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
+        {
+            var image = await _context.FileToDatabases
+                .Where(x => x.Id == dto.Id)
+                .FirstOrDefaultAsync();
+
+            _context.FileToDatabases.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return image;
         }
     }
 }
