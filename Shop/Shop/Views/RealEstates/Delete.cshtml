@@ -50,6 +50,12 @@
             <label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(model => Model.UpdatedAt)
         </div>
+
+        @foreach (var images in Model.ImageToDatabase)
+        {
+            <partial name="_Images" model="images"/>
+        }
+
     </dl>
     <hr />
     <form asp-action="DeleteConfirmation">

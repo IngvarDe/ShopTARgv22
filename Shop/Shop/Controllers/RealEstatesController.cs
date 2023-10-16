@@ -258,5 +258,7 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        // teha meetod, mis kustutab mitu pilti korraga ära
     }
 }
