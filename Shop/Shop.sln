@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Data", "Shop.Data\Shop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Core", "Shop.Core\Shop.Core.csproj", "{2CFFDA49-052D-450A-8490-EA0A437F756D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.ApplicationServices", "Shop.ApplicationServices\Shop.ApplicationServices.csproj", "{2C4EE92C-A0FA-4263-BB3C-D0E227B43813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.ApplicationServices", "Shop.ApplicationServices\Shop.ApplicationServices.csproj", "{2C4EE92C-A0FA-4263-BB3C-D0E227B43813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.SpaceshipTest", "Shop.SpaceshipTest\Shop.SpaceshipTest.csproj", "{115551E7-2CAD-47E6-BBDB-9CD1F3604EE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2C4EE92C-A0FA-4263-BB3C-D0E227B43813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4EE92C-A0FA-4263-BB3C-D0E227B43813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4EE92C-A0FA-4263-BB3C-D0E227B43813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{115551E7-2CAD-47E6-BBDB-9CD1F3604EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115551E7-2CAD-47E6-BBDB-9CD1F3604EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115551E7-2CAD-47E6-BBDB-9CD1F3604EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115551E7-2CAD-47E6-BBDB-9CD1F3604EE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
