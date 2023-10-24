@@ -1,11 +1,7 @@
 ﻿using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Shop.SpaceshipTest
 {
@@ -131,10 +127,43 @@ namespace Shop.SpaceshipTest
             var updateSpaceship = await Svc<ISpaceshipServices>().Update(update);
 
             ///error korda teha
-            Assert.DoesNotMatch(updateSpaceship.Name, createSpaceship.Name);
+            Assert.Matches(updateSpaceship.Name, createSpaceship.Name);
             Assert.NotEqual(updateSpaceship.EnginePower, createSpaceship.EnginePower);
-            Assert.Equal(updateSpaceship.Crew, createSpaceship.Crew);
+            Assert.NotEqual(updateSpaceship.Crew, createSpaceship.Crew);
             Assert.DoesNotMatch(updateSpaceship.Passengers.ToString(), createSpaceship.Passengers.ToString());
+        }
+
+        [Fact]
+        public async Task ShouldNot_UpdateSpaceship_WhenNotUpdateData()
+        {
+            SpaceshipDto dto = MockSpaceshipData();
+            await Svc<ISpaceshipServices>().Create(dto);
+
+            SpaceshipDto nullUpdate = MockNullSpaceship();
+            await Svc<ISpaceshipServices>().Update(nullUpdate);
+
+            var nullId = nullUpdate.Id;
+
+            Assert.True(dto.Id == nullId);
+        }
+
+        private SpaceshipDto MockNullSpaceship()
+        {
+            SpaceshipDto nullDto = new()
+            {
+                Id = null,
+                Name = "Name123",
+                Type = "type123",
+                Passengers = 123,
+                EnginePower = 123,
+                Crew = 123,
+                Company = "Company123",
+                CargoWeight = 123,
+                CreatedAt = DateTime.Now.AddYears(1),
+                ModifiedAt = DateTime.Now.AddYears(1),
+            };
+
+            return nullDto;
         }
 
         private SpaceshipDto MockUpdateSpaceshipData()
