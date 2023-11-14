@@ -1,0 +1,37 @@
+﻿@model Shop.Models.OpenWeathers.OpenWeatherViewModel
+
+<div class="container">
+    <h2>Forecast for the selected city</h2>
+    <h2>@Html.DisplayFor(model => model.City)</h2>
+    <hr />
+
+    <div class="form-group row">
+        <label asp-for="Temp" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.Temp) °C
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="FeelsLike" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.FeelsLike) °C
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.Description) 
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Pressure" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.Pressure) P
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Humidity" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.Humidity) %
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="WindSpeed" class="col-sm-2 col-form-label"></label>
+        @Html.DisplayFor(model => model.WindSpeed) m/s
+    </div>
+</div>
