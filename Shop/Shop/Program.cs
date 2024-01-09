@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Shop.ApplicationServices.Services;
+using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +21,18 @@ builder.Services.AddScoped<IFileServices, FilesServices>();
 builder.Services.AddScoped<IRealEstatesServices, RealEstatesServices>();
 builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Password.RequiredLength = 3;
+
+        options.Lockout.MaxFailedAccessAttempts = 2;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    })
+    .AddEntityFrameworkStores<ShopContext>()
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
+    .AddDefaultUI();
 
 var app = builder.Build();
 
