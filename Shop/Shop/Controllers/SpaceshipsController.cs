@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.FileIO;
-using Shop.ApplicationServices.Services;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
-using Shop.Models;
 using Shop.Models.Spaceship;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class SpaceshipsController : Controller
     {
         private readonly ShopContext _context;

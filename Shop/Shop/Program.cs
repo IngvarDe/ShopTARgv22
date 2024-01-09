@@ -5,8 +5,7 @@ using Shop.ApplicationServices.Services;
 using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
-
-
+using Shop.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +25,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.SignIn.RequireConfirmedAccount = true;
         options.Password.RequiredLength = 3;
 
+        options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
         options.Lockout.MaxFailedAccessAttempts = 2;
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     })
@@ -33,6 +33,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
     .AddDefaultUI();
+
+//all tokens
+builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
+    o.TokenLifespan = TimeSpan.FromHours(5));
+
+//email tokens confirmation
+builder.Services.Configure<CustomEmailConfirmationTokenProviderOptions>(o =>
+o.TokenLifespan = TimeSpan.FromDays(3));
 
 var app = builder.Build();
 
