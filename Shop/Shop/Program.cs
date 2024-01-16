@@ -48,6 +48,13 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
 builder.Services.Configure<CustomEmailConfirmationTokenProviderOptions>(o =>
 o.TokenLifespan = TimeSpan.FromDays(3));
 
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = "253677322216-5d6osssg6eo3fog9blubssvb50t4fc8q.apps.googleusercontent.com";
+        options.ClientSecret = "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";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
